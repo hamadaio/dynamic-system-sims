@@ -38,7 +38,7 @@ class BrainStateSpaceAnimator:
     def generate_fnirs_data(self):
         """Generate realistic fNIRS signals for prefrontal cortex channels"""
         # Three channels: Fp1 (left PFC), Fp2 (right PFC), short separation (physiological noise)
-        self.channel_names = ['fp1 (left-pfc)', 'fp2 (right-pfc)', 'short-sep ch (physio noise)']
+        self.channel_names = ['fp1 (left-pfc)', 'fp2 (right-pfc)', 'short-sep ch (sys noise)']
         n_channels = 3
 
         # --- create transition from rest to focus at t=10s
