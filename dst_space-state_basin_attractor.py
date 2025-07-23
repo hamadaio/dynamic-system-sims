@@ -144,13 +144,13 @@ class BrainStateSpaceAnimator:
         self.rest_indices = self.time < 10
         self.focus_indices = self.time >= 10
 
-        print(f"\nPCA decomp results:")
+        print(f"\npca decomp results:")
         print(f"PC1 explains {self.explained_variance[0]:.1%} of variance")
         print(f"PC2 explains {self.explained_variance[1]:.1%} of variance")
         print(f"PC3 explains {self.explained_variance[2]:.1%} of variance")
         print(f"Total explained: {sum(self.explained_variance):.1%}")
 
-        print(f"\nch contribution to PC:")
+        print(f"\nch contribution to pc:")
         for i, channel in enumerate(self.channel_names):
             print(f"{channel}:")
             print(f"  PC1: {self.pca_components[0, i]:.3f}")
@@ -168,9 +168,9 @@ class BrainStateSpaceAnimator:
         rest_center = np.mean(self.state_space[self.rest_indices, :2], axis=0)
         attention_center = np.mean(self.state_space[self.focus_indices, :2], axis=0)
 
-        print(f"\nEnergy landscape centers:")
-        print(f"Rest center: PC1={rest_center[0]:.3f}, PC2={rest_center[1]:.3f}")
-        print(f"Attention center: PC1={attention_center[0]:.3f}, PC2={attention_center[1]:.3f}")
+        print(f"\nenergy landscape centers:")
+        print(f"rest center: pc1={rest_center[0]:.3f}, PC2={rest_center[1]:.3f}")
+        print(f"attention center: pc1={attention_center[0]:.3f}, PC2={attention_center[1]:.3f}")
 
         # --- create energy surface
         # --- rest state = deep valley / basin (low energy)
