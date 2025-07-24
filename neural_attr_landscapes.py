@@ -252,7 +252,6 @@ print("animation saved...")
 
 print("""
 INTERPRETATION:
---> healthy brain: balanced movement, moderate valleys
---> anxiety: gets stuck in deep valleys (rumination)  
---> ADHD: jumpy movement between shallow attractors (distractibility) very rugged terrain
-""")
+-- healthy brain --> balanced movement, moderate valleys
+-- anxiety --> gets stuck in deep valleys (rumination)
+-- adhd --> jumpy movement between shallow attractors (distractibility) very rugged terrain""")
