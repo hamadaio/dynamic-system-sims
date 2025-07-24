@@ -183,7 +183,7 @@ def animate(frame):
         ax = fig.add_subplot(2, 3, i+1, projection='3d')
         
         # Plot landscape
-        ax.plot_surface(x, y, z, cmap='viridis', alpha=0.7, edgecolor='none')
+        ax.plot_surface(x, y, z, cmap='plasma', alpha=0.7, edgecolor='none')
         
         # Plot marble
         pos = marble_pos[condition]
@@ -202,7 +202,7 @@ def animate(frame):
         ax = fig.add_subplot(2, 3, i+4)
         
         # Plot contour
-        ax.contourf(x, y, z, levels=20, cmap='viridis', alpha=0.8)
+        ax.contourf(x, y, z, levels=20, cmap='plasma', alpha=0.8)
         ax.contour(x, y, z, levels=20, colors='black', alpha=0.3, linewidths=0.5)
         
         # Plot trajectory
