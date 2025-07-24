@@ -1,11 +1,19 @@
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.stats import zscore
 from scipy.interpolate import RegularGridInterpolator
+from matplotlib.animation import PillowWriter
 
-# Parameters
+matplotlib.use('MacOSX')  # This should enable animations in PyCharm
+
+# -- set font to Roboto
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = ['Roboto', 'Helvetica', 'Arial', 'DejaVu Sans']
+
+# --- parameters
 x_range = np.linspace(-5, 5, 40)
 y_range = np.linspace(-5, 5, 40)
 x, y = np.meshgrid(x_range, y_range)
@@ -40,15 +48,28 @@ def create_anxiety_landscape(x, y):
     return zscore(z) * 2.5
 
 def create_adhd_landscape(x, y):
-    """ADHD: Shallow, multiple attractors"""
-    z = create_peaks_terrain(x, y) * 0.3
-    z = add_gaussian_bowl(z, x, y, 0, 0, -2, 8)
-    z = add_gaussian_bowl(z, x, y, 2.5, 1.2, -1.8, 2.5)
-    z = add_gaussian_bowl(z, x, y, -2.2, 1.8, -1.8, 2.2)
-    z = add_gaussian_bowl(z, x, y, 1.5, -2.3, -1.5, 2.0)
-    z = add_gaussian_bowl(z, x, y, -2.8, -1.2, -1.5, 2.0)
-    z = add_gaussian_bowl(z, x, y, 0.8, 3.2, -1.2, 1.8)
-    return zscore(z) * 0.3
+    """ADHD: Rugged, shallow, multiple narrow attractors and peaks"""
+    z = create_peaks_terrain(x, y) * 0.2
+    # Existing broad attractors
+    z = add_gaussian_bowl(z, x, y, 0, 0, -1.5, 2.5)
+    z = add_gaussian_bowl(z, x, y, 2.5, 1.2, -1.2, 1.2)
+    z = add_gaussian_bowl(z, x, y, -2.2, 1.8, -1.2, 1.0)
+    z = add_gaussian_bowl(z, x, y, 1.5, -2.3, -1.0, 1.0)
+    z = add_gaussian_bowl(z, x, y, -2.8, -1.2, -1.0, 1.0)
+    z = add_gaussian_bowl(z, x, y, 0.8, 3.2, -0.8, 1.0)
+    # New narrow valleys (negative depth, narrow width)
+    z = add_gaussian_bowl(z, x, y, 1.8, 2.5, -0.9, 0.7)
+    z = add_gaussian_bowl(z, x, y, -1.5, 2.7, -1.1, 0.8)
+    z = add_gaussian_bowl(z, x, y, -3.5, -2.5, -0.8, 0.6)
+    z = add_gaussian_bowl(z, x, y, 3.0, -1.0, -1.0, 0.9)
+    z = add_gaussian_bowl(z, x, y, 2.0, -3.5, -0.7, 0.7)
+    # New narrow peaks (positive depth, narrow width)
+    z = add_gaussian_bowl(z, x, y, -2.0, 0.0, 1.0, 0.8)
+    z = add_gaussian_bowl(z, x, y, 0.0, -3.0, 0.8, 0.7)
+    z = add_gaussian_bowl(z, x, y, 3.5, 3.5, 0.9, 0.9)
+    z = add_gaussian_bowl(z, x, y, -3.5, 3.0, 1.1, 1.0)
+    z = add_gaussian_bowl(z, x, y, 2.5, -2.5, 0.7, 0.7)
+    return zscore(z) * 0.18  # Keep it shallow but rugged
 
 # Create landscapes
 z_healthy = create_healthy_landscape(x, y)
@@ -121,34 +142,39 @@ def update_marble(pos, interp_dzdx, interp_dzdy, jx, jy, step_size=0.05):
     return pos
 
 # Create figure
-fig = plt.figure(figsize=(15, 10))
+fig = plt.figure(figsize=(15, 10), facecolor='white')
 plt.subplots_adjust(hspace=0.3)
 
 def animate(frame):
     """Animation function"""
     fig.clear()
     
-    # Update marble positions
+    # -- adding drift for healthy brain
+    t = frame / num_frames * 2 * np.pi  # normalized time for oscillation
+    drift_x = 0.08 * np.cos(t * 0.5)  # slow circular drift
+    drift_y = 0.08 * np.sin(t * 0.5)
+    
+    # --- continuously update marble positions
     marble_pos['healthy'] = update_marble(marble_pos['healthy'], interp_dzdx_healthy, interp_dzdy_healthy, 
-                                         jitter_x[frame], jitter_y[frame], 0.04)
+                                         jitter_x[frame]*3 + drift_x, jitter_y[frame]*3 + drift_y, 0.3)
     marble_pos['anxiety'] = update_marble(marble_pos['anxiety'], interp_dzdx_anxiety, interp_dzdy_anxiety, 
                                          jitter_x[frame]*0.3, jitter_y[frame]*0.3, 0.02)
     marble_pos['adhd'] = update_marble(marble_pos['adhd'], interp_dzdx_adhd, interp_dzdy_adhd, 
-                                      jitter_x[frame]*3, jitter_y[frame]*3, 0.12)
+                                      jitter_x[frame]*10, jitter_y[frame]*10, 0.9)
     
-    # Store trajectories
+    # --- marble trajectories
     for condition in ['healthy', 'anxiety', 'adhd']:
         trajectories[condition]['x'].append(marble_pos[condition]['x'])
         trajectories[condition]['y'].append(marble_pos[condition]['y'])
-        # Keep only last 100 points
-        if len(trajectories[condition]['x']) > 100:
+        # Keep only last 100 points of the trajectory "tail effect"
+        if len(trajectories[condition]['x']) > 1000:
             trajectories[condition]['x'].pop(0)
             trajectories[condition]['y'].pop(0)
     
     # Data for plotting
-    landscapes = [(z_healthy, 'Healthy Brain', 'green'), 
-                  (z_anxiety, 'Anxiety', 'red'), 
-                  (z_adhd, 'ADHD', 'blue')]
+    landscapes = [(z_healthy, 'healthy brain', 'black'), 
+                  (z_anxiety, 'anxiety/ocd', 'black'), 
+                  (z_adhd, 'adhd', 'black')]
     conditions = ['healthy', 'anxiety', 'adhd']
     interps = [interp_healthy, interp_anxiety, interp_adhd]
     
@@ -162,8 +188,10 @@ def animate(frame):
         # Plot marble
         pos = marble_pos[condition]
         marble_z = interp_func([pos['x'], pos['y']])[0]
-        ax.scatter([pos['x']], [pos['y']], [marble_z + 0.2], 
-                  color='black', s=150, edgecolor='white', linewidth=2)
+        # Use a smaller offset for ADHD
+        z_offset = 0.2 if condition != 'adhd' else 0.05
+        ax.scatter([pos['x']], [pos['y']], [marble_z + z_offset], 
+                  color='#FF0000', s=150, edgecolor='white', linewidth=2)
         
         ax.set_title(title, fontsize=14, fontweight='bold', color=color)
         ax.view_init(elev=20, azim=-30)
@@ -190,14 +218,14 @@ def animate(frame):
         
         # Current marble position
         pos = marble_pos[condition]
-        ax.scatter([pos['x']], [pos['y']], color='black', s=150, 
+        ax.scatter([pos['x']], [pos['y']], color='#FF0000', s=150, 
                   edgecolor='white', linewidth=2, zorder=10)
         
         # Boundary
-        circle = plt.Circle((0, 0), radius, fill=False, color='black', linewidth=2)
+        circle = plt.Circle((0, 0), radius, fill=False, color='white', linewidth=2)
         ax.add_patch(circle)
         
-        ax.set_title(f'{title} - Trajectory', fontsize=12, color=color)
+        ax.set_title(f'{title} - trajectory', fontsize=12, color=color)
         ax.set_aspect('equal')
         ax.axis('off')
     
@@ -206,13 +234,25 @@ def animate(frame):
 # Run animation
 print("Starting brain state energy landscape simulation...")
 print("Close the window to stop the animation.")
-
-anim = FuncAnimation(fig, animate, frames=num_frames, interval=100, repeat=True)
+anim = FuncAnimation(fig, animate, frames=num_frames, interval=25, repeat=False) # --- animation loops itself inifinitely when set to "True"
 plt.show()
+
+
+# Save animation
+# anim.save('brain_statespace.mp4', writer='ffmpeg', fps=30)
+
+# Save as GIF with specific settings
+anim.save('cognitive_energy_landscape.gif', writer='pillow', fps=30, bitrate=1800)
+print("Animation saved!")
+
+# Save with progress bar
+# writer = PillowWriter(fps=30)
+# anim.save('cognitive_energy_landscape.gif', writer=writer)
+
 
 print("""
 INTERPRETATION:
-- Healthy Brain: Balanced movement, moderate valleys
-- Anxiety: Gets stuck in deep valleys (rumination)  
-- ADHD: Jumpy movement between shallow attractors (distractibility)
+--> healthy brain: balanced movement, moderate valleys
+--> anxiety: gets stuck in deep valleys (rumination)  
+--> ADHD: jumpy movement between shallow attractors (distractibility) very rugged terrain
 """)
