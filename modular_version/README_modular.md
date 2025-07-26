@@ -1,4 +1,4 @@
-# Brain state-space simulation using single-γ (gamma) HRF - modular
+# Brain state-space simulation using single-γ (gamma) hrf - modular
 
 This is a modular implementation of a brain state space simulation using fNIRS data. The simulation demonstrates the transition from resting state to focused attention using dynamic systems theory and 3D visualization.
 
@@ -25,7 +25,7 @@ dynamic-systems-sims/
 ### `fnirs_data_generator.py`
 - **Purpose**: Generates realistic fNIRS signals for prefrontal cortex channels
 - **Key features**:
-  - Simulates 3 channels: Fp1 (left PFC), Fp2 (right PFC), short separation (physio noise)
+  - Simulates 3 channels: Fp1 (left PFC), Fp2 (right PFC), short separation (physio/systemic noise)
   - Includes Single Gamma hemodynamic response function (HRF)
   - Generates physiological artifacts (cardiac, respiration, motion)
   - Applies bandpass filtering
