@@ -111,8 +111,10 @@ This simulation demonstrates concepts from:
 
 ### Hemodynamic Response Function (HRF)
 
-The simulation uses a **Single Gamma HRF function**:
+The simulation uses a **Single Gamma HRF function**, which is particularly suitable for neurofeedback applications:
 - **Formula**: `(t/delay)² × exp(-(t/delay)) / (2 × delay × dispersion²)`
 - **Characteristics**: Single positive peak, time-to-peak ~4-6 seconds
-- **Limitation**: No negative undershoot (present in real BOLD/fNIRS responses)
-- **Alternative models**: Double Gamma (SPM canonical) or Triple Gamma for more realism
+- **Neurofeedback advantage**: Models sustained attention without sharp on/off transitions
+- **Real-time suitability**: Simpler computation, no negative undershoot to complicate detection
+- **Mendi context**: Captures gradual oxygenation increases during focused attention tasks
+- **Note**: Double Gamma HRF (with undershoot) is more suitable for block-design experiments with discrete stimulus periods
