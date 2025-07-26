@@ -1,4 +1,4 @@
-# Dynamic Systems Simulations
+# Dynamic systems simulations
 
 This repository contains Python scripts for simulating and visualizing dynamic systems, particularly focusing on brain state-space dynamics using fNIRS (functional Near-Infrared Spectroscopy) data.
 
@@ -10,7 +10,7 @@ This repository contains Python scripts for simulating and visualizing dynamic s
 
 ## Features
 
--   **fNIRS Data Simulation**: Generates realistic fNIRS signals for various brain regions.
--   **State-Space Analysis**: Utilizes PCA (Principal Component Analysis) to reduce high-dimensional fNIRS data into a lower-dimensional brain state-space.
--   **Cognitive Energy Landscapes**: Visualizes brain states as a "marble" moving across an energy landscape, representing the energetic cost of cognitive transitions.
+-   **fNIRS data simulation**: Generates realistic fNIRS signals for various brain regions.
+-   **State-space analysis**: Utilizes PCA (Principal Component Analysis) to reduce high-dimensional fNIRS data into a lower-dimensional brain state-space.
+-   **Cognitive energy landscape**: Visualizes brain states as a "marble" moving across an energy landscape, representing the energetic cost of cognitive transitions.
 -   **Animations**: Generates animated visualizations of brain state trajectories and energy landscape dynamics.
