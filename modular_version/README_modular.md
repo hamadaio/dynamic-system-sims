@@ -25,9 +25,9 @@ dynamic-systems-sims/
 ### `fnirs_data_generator.py`
 - **Purpose**: Generates realistic fNIRS signals for prefrontal cortex channels
 - **Key features**:
-  - Simulates 3 channels: Fp1 (left PFC), Fp2 (right PFC), short separation (physio/systemic noise)
+  - Simulates 3 channels: Fp1 (left PFC), Fp2 (right PFC), short separation (systemic physio noise)
   - Includes Single Gamma hemodynamic response function (HRF)
-  - Generates physiological artifacts (cardiac, respiration, motion)
+  - Generates systemic physiological artifacts (vasodilation (meyer waves), cardiac, respiration, motion)
   - Applies bandpass filtering
 
 ### `state_space_analyzer.py` 
