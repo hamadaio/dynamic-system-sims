@@ -1,4 +1,4 @@
-# Brain state-space simulation using HRF - modular
+# Brain state-space simulation using single-γ (gamma) HRF - modular
 
 This is a modular implementation of a brain state space simulation using fNIRS data. The simulation demonstrates the transition from resting state to focused attention using dynamic systems theory and 3D visualization.
 
