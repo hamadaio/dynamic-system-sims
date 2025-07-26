@@ -6,7 +6,7 @@ from data generation to visualization.
 """
 
 import matplotlib
-matplotlib.use('TkAgg')  # Enable animations in PyCharm
+matplotlib.use('TkAgg')  # --- enable animations in PyCharm
 
 import matplotlib.pyplot as plt
 from fnirs_data_generator import FNIRSDataGenerator
@@ -14,12 +14,12 @@ from state_space_analyzer import StateSpaceAnalyzer
 from brain_state_visualizer import BrainStateVisualizer
 from config import SimulationConfig
 
-# Enable interactive mode
+# --- enable interactive mode
 plt.ion()
 
 
 class BrainStateSpaceSimulation:
-    """Main orchestrator for the brain state space simulation"""
+    """main orchestrator for the brain state space simulation"""
     
     def __init__(self, config=None):
         self.config = config or SimulationConfig()
@@ -35,9 +35,9 @@ class BrainStateSpaceSimulation:
         self.explained_variance = None
         
     def run_simulation(self):
-        """Run the complete simulation pipeline"""
-        print("Initializing Brain State-Space Animation...")
-        print("Simulating fNIRS data with transition from rest to focused attention...")
+        """run the complete simulation pipeline"""
+        print("initializing brain state space animation...")
+        print("simulating fNIRS data with transition from rest to focused attention...")
         
         # Step 1: Generate fNIRS data
         self._generate_data()
@@ -61,8 +61,8 @@ class BrainStateSpaceSimulation:
         print(f"Generated {self.fnirs_data.shape[0]} channels with {self.fnirs_data.shape[1]} timepoints")
         
     def _analyze_state_space(self):
-        """Perform state space analysis using PCA"""
-        print("Performing state space analysis...")
+        """perform state space analysis using PCA"""
+        print("performing state space analysis...")
         
         self.state_analyzer = StateSpaceAnalyzer()
         self.state_space, self.explained_variance = self.state_analyzer.create_state_space(
@@ -70,8 +70,8 @@ class BrainStateSpaceSimulation:
         )
         
     def _visualize_results(self):
-        """Setup and run the visualization"""
-        print("Setting up visualization...")
+        """setup and run the visualization"""
+        print("setting up visualization...")
         
         self.visualizer = BrainStateVisualizer(
             fnirs_data=self.fnirs_data,
@@ -83,13 +83,13 @@ class BrainStateSpaceSimulation:
         
         self.visualizer.setup_animation()
         
-        print("Starting animation...")
+        print("starting animation...")
         print("- blue dots: resting state")
         print("- orange dots: focused attention state")
         print("- red dots: Current brain state")
         print(f"- cognitive state transition occurs at t={self.config.TRANSITION_TIME}s")
         
-        # Run the animation
+        # --- run the animation
         save_file = self.config.OUTPUT_FILENAME if self.config.SAVE_ANIMATION else None
         anim = self.visualizer.run_animation(
             interval=self.config.ANIMATION_INTERVAL,
@@ -100,8 +100,8 @@ class BrainStateSpaceSimulation:
 
 
 def main():
-    """Main entry point"""
-    # Create and run simulation
+    """main entry point"""
+    # --- create and run simulation
     simulation = BrainStateSpaceSimulation()
     animation = simulation.run_simulation()
     
