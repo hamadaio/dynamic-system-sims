@@ -1,18 +1,18 @@
 # Brain state-space simulation using hrf - modular
 
-This is a modular implementation of a brain state space simulation using fNIRS data. The simulation demonstrates the transition from resting state to focused attention using dynamic systems theory and 3D visualization.
+This is a modular implementation of a brain state space simulation using fNIRS data. The simulation demonstrates the transition from resting state to focused attention using dynamic systems theory and 3d visualization
 
 ## Project structure
 
 ```
 dynamic-systems-sims/
-├── main_run.py                    # Main entry point - runs the complete simulation
-├── fnirs_data_generator.py        # Generates synthetic fNIRS signals using HRF
-├── state_space_analyzer.py        # Performs PCA and state space analysis  
-├── brain_state_visualizer.py      # Handles 3D animation and visualization
-├── config.py                      # Configuration settings and parameters
-├── requirements.txt               # Python dependencies
-└── README_modular.md              # This file
+├── main_run.py                    # main entry point... runs the complete simulation
+├── fnirs_data_generator.py        # generates synthetic fNIRS signals using HRF
+├── state_space_analyzer.py        # performance PCA and state space analysis  
+├── brain_state_visualizer.py      # handles 3d animation and visualization
+├── config.py                      # config ation settings and parameters
+├── requirements.txt               # python dependencies
+└── README_modular.md              # this file
 ```
 
 ## Module description
@@ -33,13 +33,13 @@ dynamic-systems-sims/
 ### `state_space_analyzer.py` 
 - **Purpose**: Performs dimensionality reduction using Principal Component Analysis
 - **Key features**:
-  - Reduces 3-channel fNIRS data to 3D state space
+  - Reduces 3-channel fNIRS data to 3d state space
   - Calculates explained variance for each component
   - Identifies rest vs focus periods
   - Provides interpretation of component contributions
 
 ### `brain_state_visualizer.py`
-- **Purpose**: Creates 3D animation and visualization of brain state dynamics
+- **Purpose**: Creates 3d animation and visualization of brain state dynamics
 - **Key features**:
   - Real-time 3D trajectory visualization
   - Time series plots of raw fNIRS signals
@@ -75,14 +75,14 @@ Modify `config.py` to adjust simulation parameters:
 - `DURATION`: Simulation length in seconds
 - `SAMPLING_RATE`: Data sampling frequency in Hz
 - `TRANSITION_TIME`: When attention task begins
-- `SAVE_ANIMATION`: Whether to save animation as GIF
+- `SAVE_ANIMATION`: Whether to save animation as gif
 - `OUTPUT_FILENAME`: Name of output animation file
 
 ## Key feature
 
 1. **Realistic fNIRS simulation**: Generates physiologically plausible brain signals
 2. **State space analysis**: Uses PCA to visualize brain state dynamics
-3. **Real-time animation**: 3D visualization of cognitive state transitions
+3. **Real-time animation**: 3d visualization of cognitive state transitions
 4. **Modular design**: Easy to modify individual components
 5. **Configurable**: Adjustable parameters without code changes
 
@@ -92,7 +92,7 @@ The simulation produces:
 - Console output with PCA analysis results
 - Interactive 3D animation window
 - Optional saved GIF animation file
-- Multiple subplot views (3D trajectory, time series, phase portrait)
+- Multiple subplot views (3d trajectory, time series, phase portrait)
 
 ## Cognitive states
 
