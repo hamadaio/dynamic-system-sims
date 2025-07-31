@@ -71,7 +71,7 @@ class BrainStateSpaceAnimator:
 
         # --- channel 1: fp2 (right pfc) - long separation channel
         # --- similar to fp1 but with different baseline and slightly less activation
-        fp2_baseline = 0.15 * np.sin(2 * np.pi * 0.09 * self.time + np.pi / 4)  # Phase-shifted
+        fp2_baseline = 0.15 * np.sin(2 * np.pi * 0.09 * self.time + np.pi / 4)  # --- phase-shifted
         fp2_baseline += 0.08 * np.sin(2 * np.pi * 0.11 * self.time)
         fp2_baseline += np.random.randn(self.n_timepoints) * 0.05
 
