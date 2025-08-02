@@ -1,5 +1,5 @@
 import matplotlib
-matplotlib.use('TkAgg')  # --- this should enable animations in pycharm
+matplotlib.use('TkAgg')  # --- this should enable animations in Pycharm
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
